@@ -1,0 +1,57 @@
+@use "sass:map";
+@use "sass:string";
+
+@use "./plugins/columns-system" as *;
+@use "./plugins/aspect-ratio" as *;
+@use "./generator" as *;
+
+//################################################################################################################
+//
+//   UTILITIES ROUTER
+//
+//################################################################################################################
+
+@mixin utility-router($utility-id, $utility-config, $value-name, $value, $utility-modifiers) {
+
+    //===============================================================================================================
+    //  Cycle index solver
+    //===============================================================================================================
+
+    // VAR: Get if its utility first pass
+    @if(map-get($utility-id, "media-query-cycle-id") == 1 and map-get($utility-id, "value-cycle-id") == 1 and map-get($utility-id, "media-obj-id") == 1 and map-get($utility-id, "state-cycle-id") == null) {
+      $utility-config: map.set($utility-config, "utility-first-pass", true);
+    }@else{
+      $utility-config: map.set($utility-config, "utility-first-pass", false);
+    }
+    // VAR: Get if its media query first pass
+    @if(map-get($utility-id, "value-cycle-id") == 1 and map-get($utility-id, "media-obj-id") == 1 and map-get($utility-id, "state-cycle-id") == null) {
+      $utility-config: map.set($utility-config, "media-query-first-pass", true);
+    }@else{
+      $utility-config: map.set($utility-config, "media-query-first-pass", false);
+    }
+
+    //===============================================================================================================
+    //  VAR: Utility Router
+    //===============================================================================================================
+  
+    @if(str-index(map.get($utility-id,"utility-name"),"columns-system") !=null) {
+      //-------------------------------------------------------------------
+      //  MIXIN: Utility Columns System
+      //-------------------------------------------------------------------
+      @include utility-columns-system($utility-id, $utility-config, $value-name, $value, $utility-modifiers);
+    }
+  
+    @else if(str-index(map.get($utility-id,"utility-name"),"aspect-ratio") !=null) {
+      //-------------------------------------------------------------------
+      //  MIXIN: Utility Aspect Ratio
+      //-------------------------------------------------------------------
+      @include utility-aspect-ratio($utility-id, $utility-config, $value-name, $value, $utility-modifiers);
+    }
+  
+    @else {
+      //-------------------------------------------------------------------
+      //  MIXIN: Utility Generator
+      //-------------------------------------------------------------------
+      @include utility-generator($utility-id, $utility-config, $value-name, $value, $utility-modifiers);
+    }
+  }

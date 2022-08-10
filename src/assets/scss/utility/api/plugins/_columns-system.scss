@@ -1,0 +1,123 @@
+@use "sass:map";
+
+@use "../generator" as *;
+@use "../../utils/functions" as *;
+@use "../../../abstracts/tokens";
+
+//################################################################################################################
+//
+//   COLUMNS SYSTEM PLUGIN
+//
+//################################################################################################################
+
+@mixin utility-columns-system($utility-id, $utility-config, $value-name, $value, $utility-modifiers) {
+
+  // VAR: Prefix
+  $prefix: map.get($utility-modifiers, "prefix");
+  // VAR: Property
+  $class-property: nth(nth(map.get($utility-config, "property"), 1), 2);
+
+  @if(map.get($utility-config, "utility-first-pass")==true) {
+
+    //----------------------------------------------------------------------------
+    // Static classes
+    //----------------------------------------------------------------------------
+
+    [class*="#{$class-property}"] {
+      float: left;
+      min-height: 1px;
+    }
+
+    .container {
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .row {
+      &:not(.flex):not(.grid) {
+
+        &:before,
+        &:after {
+          content: " ";
+          display: table;
+        }
+
+        &:after {
+          clear: both;
+        }
+
+        & {
+          *zoom: 1;
+        }
+      }
+    }
+  }
+
+
+  @if(map.get($utility-config, "media-query-first-pass")==true) {
+
+    $breakpoints: map-deep-get(tokens.$tokens, 'breakpoints');
+
+    // Copy first breakpoint, that will be stablished as "base"
+    $base-breakpoint: nth($breakpoints, 1);
+    $base-breakpoint-values: nth($base-breakpoint, 2);
+    $base-breakpoint-map: ("base": $base-breakpoint-values);
+    $breakpoints: map-merge($base-breakpoint-map, $breakpoints);
+
+    @if($breakpoints and map.get($utility-modifiers, "break-name")) {
+
+      $breakpoints-map: map.get($breakpoints, map.get($utility-modifiers, "break-name"));
+      // VAR: Breakpoint size
+      $break-size: map-get($breakpoints-map, "breakpoint");
+      // VAR: Gutter size
+      $gutter-size: map-get($breakpoints-map, "gutter");
+      // VAR: Spacing size
+      $column-margin: map-get($breakpoints-map, "column-margin");
+      // VAR: Base font size
+      $base-font-size: map-get($breakpoints-map, "base-font-size");
+      // VAR: Max width
+      $max-width: map-get($breakpoints-map, "max-width");
+
+      //----------------------------------------------------------------------------
+      // Generated classes
+      //----------------------------------------------------------------------------
+
+      // Font Size
+      @if ($base-font-size) {
+        html {
+          font-size: $base-font-size;
+        }
+      }
+
+      // Wrap
+      .container {
+        @if ($gutter-size) {
+          padding: 0 $gutter-size;
+        }
+
+        @if ($max-width) {
+          max-width: $max-width;
+        }
+      }
+
+      // Rows
+      @if ($column-margin) {
+        .row {
+          margin: 0 calc($column-margin/2 * -1);
+        }
+
+        // Columns margins
+        [class*="#{$class-property}"] {
+          padding: 0 calc($column-margin/2);
+        }
+      }
+    }
+
+  }
+
+
+  //----------------------------------------------------------------------------
+  // Generate classes
+  //----------------------------------------------------------------------------
+  @include utility-generator($utility-id, $utility-config, $value-name, $value, $utility-modifiers);
+}

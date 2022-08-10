@@ -1,0 +1,160 @@
+@use "../utils/functions";
+@use "../../abstracts/tokens" as *;
+
+//################################################################################################################
+//
+//    CONFIGS: BACKGROUND
+//
+//    "configs":
+//    "property": 
+//         (
+//          "css-property": "css-naming",
+//          "other-css-property": "other-css-naming"
+//         ), 
+//    "css-selector": false | string (special CSS selector ex: * + *)             
+//    "css-vars-only": false | true (export only the CSS vars)
+//    "css-vars": false | true (export the CSS vars as :root)
+//    "css-vars-local": false | string (generate the CSS vars as local vars)
+//    "dark-mode": false | class | media (generate the classes, media queries and/or classes for dark mode)
+//    "responsive": true | false (generate the responsive classes and media queries)
+//    "state": hover focus (generate states classes and prefixes for each state)
+//
+//################################################################################################################
+
+//===============================================================================================================
+// BACKGROUND ATTACHMENT
+//===============================================================================================================
+$background-attachment: (
+  "background-attachment": (
+		"configs": (
+			"property": (
+				"background-attachment": bg-
+				)
+		),
+		"values": (
+			"fixed": fixed,
+			"local": local,
+			"scroll": scroll
+		)
+	)
+);
+
+//===============================================================================================================
+// BACKGROUND CLIP
+//===============================================================================================================
+$background-clip: (
+  "background-clip": (
+		"configs": (
+			"property": (
+				"background-clip": bg-clip-
+				)
+		),
+		"values": (
+			"border": border-box,
+			"padding": padding-box,
+			"content": content-box,
+      "text": text
+		)
+	)
+);
+
+//===============================================================================================================
+// BACKGROUND COLOR
+//===============================================================================================================
+$background-color: (
+  "background-color": (
+		"configs": (
+			"property": (
+				"background-color": bg-
+			),
+			"dark-mode": class,
+			"css-vars-id": color-,
+			"ext-css-vars": true,
+			"state": hover
+		),
+		"values": (
+			functions.map-flatten-cti($tokens, "color")
+		)
+	)
+);
+
+//===============================================================================================================
+// BACKGROUND ORIGIN
+//===============================================================================================================
+$background-origin: (
+  "background-origin": (
+		"configs": (
+			"property": (
+				"background-origin": bg-origin-
+			)
+		),
+		"values": (
+			"border": border-box,
+			"padding": padding-box,
+			"content": content-box
+		)
+	)
+);
+
+//===============================================================================================================
+// BACKGROUND POSITION
+//===============================================================================================================
+$background-position: (
+  "background-position": (
+		"configs": (
+			"property": (
+				"background-position": bg-
+			)
+		),
+		"values": (
+			"bottom": bottom,
+			"center": center,
+			"left": left,
+			"left-bottom": left bottom,
+			"left-top": left top,
+			"right": right,
+			"right-bottom": right bottom,
+			"right-top": right top,
+			"top": top
+		)
+	)
+);
+
+//===============================================================================================================
+// BACKGROUND REPEAT
+//===============================================================================================================
+$background-repeat: (
+  "background-repeat": (
+		"configs": (
+			"property": (
+				"background-repeat": bg-
+			)
+		),
+		"values": (
+			"repeat": repeat,
+			"no-repeat": no-repeat,
+			"repeat-x": repeat-x,
+			"repeat-y": repeat-y,
+			"repeat-round": round,
+			"repeat-space": space
+		)
+	)
+);
+
+//===============================================================================================================
+// BACKGROUND SIZE
+//===============================================================================================================
+$background-size: (
+  "background-size": (
+		"configs": (
+			"property": (
+				"background-size": bg-
+			)
+		),
+		"values": (
+			"auto": auto,
+			"cover": cover,
+			"contain": contain
+		)
+	)
+);

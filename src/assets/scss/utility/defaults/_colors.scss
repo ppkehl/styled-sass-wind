@@ -1,0 +1,43 @@
+@use "../utils/functions";
+@use "../../abstracts/tokens" as *;
+
+//################################################################################################################
+//
+//    CONFIGS: COLORS
+//
+//    "configs":
+//    "property": 
+//         (
+//          "css-property": "css-naming",
+//          "other-css-property": "other-css-naming"
+//         ), 
+//    "css-selector": false | string (special CSS selector ex: * + *)             
+//    "css-vars-only": false | true (export only the CSS vars)
+//    "css-vars": false | true (export the CSS vars as :root)
+//    "css-vars-local": false | string (generate the CSS vars as local vars)
+//    "dark-mode": false | class | media (generate the classes, media queries and/or classes for dark mode)
+//    "responsive": true | false (generate the responsive classes and media queries)
+//    "state": hover focus (generate states classes and prefixes for each state)
+//
+//################################################################################################################
+
+$color-palette: (
+	"color": (
+		"configs": (
+			"property": (
+				"color": color-
+			),
+			"css-vars-only": true,
+			"css-vars-id": color-,
+		),
+		"values": (
+			map-merge((
+				"inherit": inherit,
+				"default": default,
+				"transparent": transparent
+				),
+				functions.map-flatten-cti($tokens, "color")
+			)
+		)
+	)
+)

@@ -1,0 +1,168 @@
+@use "sass:map";
+
+@use "./css-vars-cycler" as *;
+@use "./media-query-wrapper" as *;
+
+//################################################################################################################
+//
+//   CONFIGURATION PARCER
+//
+//################################################################################################################
+
+@function configs-parcer($utility-name, $input-utility-config) {
+
+  // VAR: Utility Config
+  $utility-config: ();
+  
+  //-------------------------------------------------------------------
+  //  VAR: Utility property -> Configs
+  //-------------------------------------------------------------------
+
+  // VAR: Utility property -> Configs -> Property default
+  $utility-config: map.set($utility-config, "property", ("#{$utility-name}":"#{$utility-name}-"));
+  // VAR: Utility property -> Configs -> CSS Selector default
+  $utility-config: map.set($utility-config, "css-selector", "");
+  // VAR: Utility property -> Configs -> CSS Vars Only default
+  $utility-config: map.set($utility-config, "css-vars-only", false);
+  // VAR: Utility property -> Configs -> Use external CSS Vars default
+  $utility-config: map.set($utility-config, "ext-css-vars", false);
+  // VAR: Utility property -> Configs -> CSS Vars ID default
+  $utility-config: map.set($utility-config, "css-vars-id", "#{$utility-name}-");
+  // VAR: Utility property -> Configs -> CSS Vars default
+  $utility-config: map.set($utility-config, "css-vars", false);
+  // VAR: Utility property -> Configs -> CSS Vars Local default
+  $utility-config: map.set($utility-config, "css-vars-local", false);
+  // VAR: Utility property -> Configs -> CSS Vars Fallback default
+  $utility-config: map.set($utility-config, "css-vars-fallback", false);
+  // VAR: Utility property -> Configs -> State default
+  $utility-config: map.set($utility-config, "state", false);
+  // VAR: Utility property -> Configs -> CSS Responsive default
+  $utility-config: map.set($utility-config, "responsive", true);
+  // VAR: Utility property -> Configs -> CSS vars local default
+  $utility-config: map.set($utility-config, "css-vars-local", false);
+  // VAR: Dark mode prefix
+  $utility-config: map.set($utility-config, "dark-mode-prefix", "dark\\:");
+  // VAR: Dark mode class
+  $utility-config: map.set($utility-config, "dark-mode-class", "dark");
+
+  // If there are local overwrites
+  @if($input-utility-config) {
+
+    // VAR: Utility property -> Configs -> Property
+    @if(map-get($input-utility-config, "property") != null) {
+      $utility-config: map.set($utility-config, "property", map-get($input-utility-config, "property"));
+    }
+
+    // VAR: Utility property -> Configs -> CSS Selector
+    @if(map-get($input-utility-config, "css-selector") != null and map-get($input-utility-config, "css-selector") != false) {
+      $utility-config: map.set($utility-config, "css-selector", map-get($input-utility-config, "css-selector"));
+    }
+
+    // VAR: Utility property -> Configs -> CSS Vars Only
+    @if(map-get($input-utility-config, "css-vars-only") != null) {
+      $utility-config: map.set($utility-config, "css-vars-only", map-get($input-utility-config, "css-vars-only"));
+    }
+
+    // VAR: Utility property -> Configs -> Use external CSS Vars
+    @if(map-get($input-utility-config, "ext-css-vars") != null) {
+      $utility-config: map.set($utility-config, "ext-css-vars", map-get($input-utility-config, "ext-css-vars"));
+    }
+
+    // VAR: Utility property -> Configs -> CSS Vars ID
+    @if(map-get($input-utility-config, "css-vars-id") != null) {
+      $utility-config: map.set($utility-config, "css-vars-id", map-get($input-utility-config, "css-vars-id"));
+    }
+
+    // VAR: Utility property -> Configs -> CSS Vars
+    @if(map-get($input-utility-config, "css-vars") != null) {
+      $utility-config: map.set($utility-config, "css-vars", map-get($input-utility-config, "css-vars"));
+    }
+
+    // VAR: Utility property -> Configs -> CSS Vars Local
+    @if(map-get($input-utility-config, "css-vars-local") != null) {
+      $utility-config: map.set($utility-config, "css-vars-local", map-get($input-utility-config, "css-vars-local"));
+    }
+
+    // VAR: Utility property -> Configs -> CSS Vars Fallback Local
+    @if(map-get($input-utility-config, "css-vars-fallback") != null) {
+      $utility-config: map.set($utility-config, "css-vars-fallback", map-get($input-utility-config, "css-vars-fallback"));
+    }
+
+    // VAR: Utility property -> Configs -> State
+    @if(map-get($input-utility-config, "state") != null) {
+      $utility-config: map.set($utility-config, "state", map-get($input-utility-config, "state"));
+    }
+
+    // VAR: Utility property -> Configs -> CSS Responsive
+    @if(map-get($input-utility-config, "responsive") != null) {
+      $utility-config: map.set($utility-config, "responsive", map-get($input-utility-config, "responsive"));
+    }
+
+    // VAR: Utility property -> Configs -> CSS Dark Mode
+    @if(map-get($input-utility-config, "dark-mode") != null) {
+      $utility-config: map.set($utility-config, "dark-mode", map-get($input-utility-config, "dark-mode"));
+    }
+  }
+
+  // If there are global overwrites
+  @if(variable-exists($name: utility-configs-global-overwrites)) {
+    $utility-config: map.merge($utility-config, $utility-configs-global-overwrites)
+  }
+
+  @return $utility-config;
+
+};
+
+//################################################################################################################
+//
+//   UTILITY PARCER
+//
+//################################################################################################################
+
+@mixin utility-parcer($utility-id, $utility-map) {
+
+  //-------------------------------------------------------------------
+  // VAR: Utility name
+  //-------------------------------------------------------------------
+  $utility-name: map-get($utility-id, "utility-name");
+
+  //-------------------------------------------------------------------
+  // VAR: Utility property -> Configs
+  //-------------------------------------------------------------------
+  $input-utility-config: map-get($utility-map, "configs");
+
+  //-------------------------------------------------------------------
+  //  VAR: Utility property -> Values
+  //-------------------------------------------------------------------
+  $utility-values: map-get($utility-map, "values");
+
+  @if($utility-values){
+
+    //-------------------------------------------------------------------
+    //  FUNCTION: Configs Parse
+    //-------------------------------------------------------------------
+    $utility-config: configs-parcer($utility-name, $input-utility-config);
+    @debug("Processing utility--->"$utility-name);
+
+    //-------------------------------------------------------------------
+    //  MIXIN: CSS Vars
+    //-------------------------------------------------------------------
+    @if(map-get($utility-config, "css-vars") == true or map-get($utility-config, "css-vars-only") == true) {
+      @include css-vars-cycler($utility-id, $utility-config, $utility-values);
+    }
+
+    //-------------------------------------------------------------------
+    //  MIXIN: Media Query Cycler
+    //-------------------------------------------------------------------
+    @if(map-get($utility-config, "css-vars-only") != true) {
+      @include media-query-wrapper($utility-id, $utility-config, $utility-values, $utility-modifiers: ());
+    }
+
+  }
+  @else{
+
+    @warn "NO MAP PROVIDED: utility-parcer -> The function "#{$utility-name}" does not have values setted."
+
+  }
+
+}

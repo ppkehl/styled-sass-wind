@@ -1,0 +1,28 @@
+{
+  "ratio": {
+    "wide": {
+      "value": "16x9",
+      "type": "sizing"
+    },
+    "3x2": {
+      "value": "3x2",
+      "type": "sizing"
+    },
+    "4x3": {
+      "value": "4x3",
+      "type": "sizing"
+    },
+    "1x1": {
+      "value": "1x1",
+      "type": "sizing"
+    },
+    "2x1": {
+      "value": "2x1",
+      "type": "sizing"
+    },
+    "3x1": {
+      "value": "3x1",
+      "type": "sizing"
+    }
+  }
+}

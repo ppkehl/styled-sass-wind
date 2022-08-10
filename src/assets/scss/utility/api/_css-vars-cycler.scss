@@ -1,0 +1,33 @@
+@use "sass:map";
+
+@use "../utils/functions" as *;
+
+//################################################################################################################
+//
+//   CSS VARS CYCLER
+//
+//################################################################################################################
+
+@mixin css-vars-cycler($utility-id, $utility-config, $utility-values) {
+
+	// VAR: Property
+	$property: map.get($utility-config, "property");
+	// VAR: Property State
+	$css-vars-id: map.get($utility-config, "css-vars-id");
+
+	//----------------------------------------------------------------------------
+	// Generated classes
+	//----------------------------------------------------------------------------
+
+	:root {
+		@each $value-name, $value in $utility-values {
+
+			// VAR: Sanitized Value Name
+			$sanitized-value-name: sanitize-string($value-name);
+			// VAR: Sanitized Value
+			$value: unquotify($value);
+			
+			#{'--'}#{$css-vars-id}#{$sanitized-value-name}: $value;
+		}
+	}
+}

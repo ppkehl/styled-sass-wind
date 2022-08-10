@@ -1,0 +1,145 @@
+@use "sass:map";
+
+@use "../utils/functions";
+@use "../../abstracts/tokens" as *;
+@use "./state-cycler" as *;
+
+//################################################################################################################
+//
+//   MEDIA QUERY WRAPPER MIXIN
+//
+//################################################################################################################
+
+@mixin media-query-wrapper($utility-id, $utility-config, $utility-values, $utility-modifiers) {
+
+    // VAR: Breakpoints
+    $breakpoints: functions.map-deep-get($tokens, "breakpoints");
+    // VAR: Dark mode
+    $dark-mode: map-get($utility-config, "dark-mode");
+    // VAR: Dark mode prefix
+    $dark-prefix: map-get($utility-config, "dark-mode-prefix");
+    // VAR: Dark mode class
+    $dark-class: map-get($utility-config, "dark-mode-class");
+  
+    // If breakpoints are set
+    @if ($breakpoints and map-get($utility-config, "responsive")) {
+
+      // Copy first breakpoint, that will be stablished as "base"
+      $base-breakpoint: nth($breakpoints, 1);
+      $base-breakpoint-values: nth($base-breakpoint, 2);
+      $base-breakpoint-map: ("base": $base-breakpoint-values);
+      $breakpoints: map-merge($base-breakpoint-map, $breakpoints);
+  
+      // Cycle breakpoints
+      @each $break-name, $break-map in $breakpoints {
+  
+        //-------------------------------------------------------------------
+        //  VAR: Media Queries
+        //-------------------------------------------------------------------
+  
+        // VAR: Cycler
+        $i: index(($breakpoints), ($break-name $break-map));
+        $utility-id: map.set($utility-id, "media-query-cycle-id", $i);
+        // VAR: Break size
+        $break-size: map-get($break-map, "breakpoint");
+        // VAR: Break prefix
+        $break-prefix: "#{$break-name}\\:";
+        @if($break-name=='base') {
+          $break-prefix: "";
+        }
+  
+        // If break name == base
+        @if ($break-name=="base") {
+  
+          //-------------------------------------------------------------------
+          //  MIXIN: Properties Cycler
+          //-------------------------------------------------------------------
+          $utility-id: map.set($utility-id, "media-obj-id", 1);
+          @include states-cycler($utility-id, $utility-config, $utility-values, $utility-modifiers:("break-name": $break-name));
+          @if ($dark-mode==media) {
+            @media (prefers-color-scheme: dark) {
+              
+              //-------------------------------------------------------------------
+              //  MIXIN: Properties Cycler
+              //-------------------------------------------------------------------
+              $utility-id: map.set($utility-id, "media-obj-id", 2);
+              @include states-cycler($utility-id, $utility-config, $utility-values, $utility-modifiers:("break-name": $break-name, "prefix": $dark-prefix));
+            }
+          } @else if($dark-mode==class) {
+            .#{$dark-class} {
+  
+              //-------------------------------------------------------------------
+              //  MIXIN: Properties Cycler
+              //-------------------------------------------------------------------
+              $utility-id: map.set($utility-id, "media-obj-id", 2);
+              @include states-cycler($utility-id, $utility-config, $utility-values, $utility-modifiers:("break-name": $break-name, "prefix": $dark-prefix));
+            }
+          }
+        } 
+        // If break name != base
+        @else {
+          @media screen and (min-width: $break-size) {
+            
+            //-------------------------------------------------------------------
+            //  MIXIN: Properties Cycler
+            //-------------------------------------------------------------------
+            $utility-id: map.set($utility-id, "media-obj-id", 1);
+            @include states-cycler($utility-id, $utility-config, $utility-values, $utility-modifiers:("break-name": $break-name, "prefix": $break-prefix));
+            @if ($dark-mode==media) {
+              @media (prefers-color-scheme: dark) {
+  
+                //-------------------------------------------------------------------
+                //  MIXIN: Properties Cycler
+                //-------------------------------------------------------------------
+                $utility-id: map.set($utility-id, "media-obj-id", 2);
+                @include states-cycler($utility-id, $utility-config, $utility-values, $utility-modifiers:("break-name": $break-name, "prefix": #{$dark-prefix}#{$break-prefix}));
+              }
+            }
+            @else if($dark-mode==class) {
+              .#{$dark-class} {
+                
+                //-------------------------------------------------------------------
+                //  MIXIN: Properties Cycler
+                //-------------------------------------------------------------------
+                $utility-id: map.set($utility-id, "media-obj-id", 2);
+                @include states-cycler($utility-id, $utility-config, $utility-values, $utility-modifiers:("break-name": $break-name, "prefix": #{$dark-prefix}#{$break-prefix}));
+              }
+            }
+          }               
+        }
+      }
+    }
+    // If breakpoints are not set
+    @else{
+      //-------------------------------------------------------------------
+      //  MIXIN: Properties Cycler
+      //-------------------------------------------------------------------
+      // VAR: Cycler
+      $utility-id: map.set($utility-id, "media-query-cycle-id", 1);
+      $utility-id: map.set($utility-id, "media-obj-id", 1);
+      @include states-cycler($utility-id, $utility-config, $utility-values, $utility-modifiers:());
+      @if ($dark-mode==media) {
+        @media (prefers-color-scheme: dark) {
+          
+          //-------------------------------------------------------------------
+          //  MIXIN: Properties Cycler
+          //-------------------------------------------------------------------
+          $utility-id: map.set($utility-id, "media-obj-id", 2);
+          @include states-cycler($utility-id, $utility-config, $utility-values, $utility-modifiers:("prefix": $dark-prefix));
+        }
+      } 
+      @else if($dark-mode==class) {
+        .#{$dark-class} {
+          
+          //-------------------------------------------------------------------
+          //  MIXIN: Properties Cycler
+          //-------------------------------------------------------------------
+          $utility-id: map.set($utility-id, "media-obj-id", 2);
+          @include states-cycler($utility-id, $utility-config, $utility-values, $utility-modifiers:("prefix": $dark-prefix));
+        }
+      }
+      @if (not variable-exists($name: breakpoints)){
+        @warn 'RECOMMENDED MAP MISSING: #{map-get($utility-id, "name")} -> Breakpoints ($breakpoints) not set. Generating only unprefixed classes';
+      }
+    }
+  }

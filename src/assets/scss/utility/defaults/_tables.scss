@@ -1,0 +1,56 @@
+@use "../utils/functions";
+@use "../../abstracts/tokens" as *;
+
+//################################################################################################################
+//
+//    CONFIGS: TABLES
+//
+//    "configs":
+//    "property": 
+//         (
+//          "css-property": "css-naming",
+//          "other-css-property": "other-css-naming"
+//         ), 
+//    "css-selector": false | string (special CSS selector ex: * + *)             
+//    "css-vars-only": false | true (export only the CSS vars)
+//    "css-vars": false | true (export the CSS vars as :root)
+//    "css-vars-local": false | string (generate the CSS vars as local vars)
+//    "dark-mode": false | class | media (generate the classes, media queries and/or classes for dark mode)
+//    "responsive": true | false (generate the responsive classes and media queries)
+//    "state": hover focus (generate states classes and prefixes for each state)
+//
+//################################################################################################################
+
+//===============================================================================================================
+// BORDER COLLAPSE
+//===============================================================================================================
+$tables-border-collapse: (
+    "border-collapse": (
+		"configs": (
+			"property": (
+				"border-collapse": border-
+			),
+		),
+		"values": (
+      "border-collapse": collapse,
+      "border-separate": separate
+		)
+	)
+);
+
+//===============================================================================================================
+// TABLE LAYOUT
+//===============================================================================================================
+$tables-table-layout: (
+    "table-layout": (
+		"configs": (
+			"property": (
+				"table-layout": tables-
+			),
+		),
+		"values": (
+      "auto": auto,
+      "fixed": fixed
+		)
+	)
+);

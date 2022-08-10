@@ -1,0 +1,150 @@
+@use "sass:map";
+@use "sass:list";
+@use "sass:string";
+
+@use "../utils/functions" as *;
+@use "../utils/mixins" as *;
+
+//################################################################################################################
+//
+//   UTILITIES GENERATOR MIXINS
+//
+//################################################################################################################
+
+//===============================================================================================================
+// Global
+//===============================================================================================================
+
+@mixin utility-generator($utility-id, $utility-config, $value-name, $value, $utility-modifiers) {
+
+  // VAR: Sanitized Value Name
+  $sanitized-value-name: sanitize-string($value-name);
+  // VAR: Prefix
+  $prefix: map.get($utility-modifiers, "prefix");
+  // VAR: Property
+  $property: map.get($utility-config, "property");
+  // VAR: CSS Selector
+  $css-selector: map.get($utility-config, "css-selector");
+  // VAR: CSS Vars ID
+  $css-vars-id: map.get($utility-config, "css-vars-id");
+  // VAR: Property State
+  $utility-state: map.get($utility-modifiers, "state");
+  // VAR: Property State Prefix
+  $utility-state-prefix: "";
+  // VAR: Property State Sufix
+  $utility-state-sufix: "";
+  // VAR: Utility state vars
+  @if($utility-state !="") {
+    $utility-state-sufix: ":#{$utility-state}";
+    $utility-state-prefix: "#{$utility-state}\\:";
+  }
+
+  //----------------------------------------------------------------------------
+  // Generated classes
+  //----------------------------------------------------------------------------
+  @each $property-obj, $property-class in $property {
+    
+    // Compose class 
+    .#{$prefix}#{$utility-state-prefix}#{$property-class}#{$sanitized-value-name}#{$css-selector}#{$utility-state-sufix} {
+
+      // Check if value has a semicolon, meaning the output should be handled "as is"
+      @if(type-of($value)==string and str-index($value, ":") != null) {
+        $splited-values: split-str($value, ';');
+        // For each particle
+        @each $splited-value in $splited-values {
+          // Remove semicolons
+          $splited-properties: str-replace($splited-value, ";", "");
+          // Split properties and values
+          $splited-properties: split-str($splited-properties, ':');
+          // Display properties and values
+          #{list.nth($splited-properties, 1)}: #{list.nth($splited-properties, 2)};
+        }
+      }
+
+      // If not explicit, process normaly
+      @else {
+        // VAR: Sanitized Value
+        $value: unquotify($value);
+        // VAR: Get "css-vars-local" values 
+        $css-vars-local: map.get($utility-config, "css-vars-local");
+
+        // If "css-vars-local" are set, print CSS variables
+        @if($css-vars-local!=false) {
+          @each $local-var, $local-var-default in $css-vars-local{
+
+            // VAR: Get index
+            $i: index($css-vars-local, $local-var $local-var-default);
+            // VAR: Get lenght
+            $css-vars-local-length: length($css-vars-local);
+
+            @if($i==1 and $local-var-default == [values]){
+              @if(map.get($utility-config, "css-vars") == true){
+                #{'--'}#{$local-var}: var(#{'--'}#{$css-vars-id}#{$sanitized-value-name});
+              }@else{
+                #{'--'}#{$local-var}: $value;
+              }
+            }@else if($local-var-default != [values]){
+              #{'--'}#{$local-var}: $local-var-default;
+            }
+          }
+        }
+
+        // For each property object 
+        @each $sub-property-obj in $property-obj {
+          
+          // If "css-vars-local" is set
+          @if($css-vars-local != false) {
+            @each $local-var, $local-var-default in $css-vars-local{
+
+              // VAR: Get index
+              $i: index($css-vars-local, $local-var $local-var-default);
+              // VAR: Get lenght
+              $css-vars-local-length: length($css-vars-local);
+              
+              // If index == 1, and $local-var-default == [values]
+              @if($i==1 and $local-var-default == [values]){
+
+                @if($css-vars-local-length > 1 and map.get($utility-config, "utility-first-pass") == true){
+                  @warn 'CONFIGURATION ERROR: #{$property-obj} --> If "css-vars-local" is set as [values] it can only accept 1 value. Only first value was used.';
+                }
+                // Fallback property
+                @if(map.get($utility-config, "css-vars-fallback") != false){
+                  #{$sub-property-obj}: $value;
+                }
+                // Custom CSS variable
+                #{$sub-property-obj}: var(#{'--'}#{$local-var});
+
+              }@else if($local-var-default != [values]){
+                // Fallback property
+                @if(map.get($utility-config, "css-vars-fallback") != false){
+                  
+                  #{$sub-property-obj}: str-replace($value, var(#{'--'}#{$local-var}), $local-var-default);
+                }
+                // Normal output property
+                #{$sub-property-obj}: $value;
+
+              }
+            }
+          }
+
+          // If "css-vars-local" is not set, but "css-vars" or "ext-css-vars" are set
+          @else if(map.get($utility-config, "css-vars-local") == false and map.get($utility-config, "css-vars") == true or map.get($utility-config, "ext-css-vars") == true){
+            // Fallback property
+            @if(map.get($utility-config, "css-vars-fallback") != false){
+              #{$sub-property-obj}: $value;
+            }
+            // Custom CSS variable
+             #{$sub-property-obj}: var(#{'--'}#{$css-vars-id}#{$sanitized-value-name});
+          }
+
+          // Else
+          @else {
+            // Normal output property
+            #{$sub-property-obj}: $value;
+          }
+        }
+
+      }
+    }
+  }
+}

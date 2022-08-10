@@ -1,0 +1,153 @@
+@use "../utils/functions";
+@use "../../abstracts/tokens" as *;
+
+//################################################################################################################
+//
+//    CONFIGS: EFFECTS
+//
+//    "configs":
+//    "property": 
+//         (
+//          "css-property": "css-naming",
+//          "other-css-property": "other-css-naming"
+//         ), 
+//    "css-selector": false | string (special CSS selector ex: * + *)             
+//    "css-vars-only": false | true (export only the CSS vars)
+//    "css-vars": false | true (export the CSS vars as :root)
+//    "css-vars-local": false | string (generate the CSS vars as local vars)
+//    "dark-mode": false | class | media (generate the classes, media queries and/or classes for dark mode)
+//    "responsive": true | false (generate the responsive classes and media queries)
+//    "state": hover focus (generate states classes and prefixes for each state)
+//
+//################################################################################################################
+
+//===============================================================================================================
+// BOX SHADOW
+//===============================================================================================================
+$effects-box-shadow: (
+  "box-shadow": (
+		"configs": (
+			"property": (
+				"box-shadow": shadow-
+			),
+         "css-vars-local": (
+      	"shadow-color": rgba(0, 0, 0, 0.5)
+         ),
+		),
+		"values": (
+         functions.map-flatten-cti($tokens, "shadow")
+		)
+	)
+);
+
+//===============================================================================================================
+// BOX SHADOW COLOR
+//===============================================================================================================
+$effects-box-shadow-color: (
+	"box-shadow-color": (
+		"configs": (
+      "property": (
+				"--shadow-color": shadow-
+			),
+      "css-vars": true,
+			"css-vars-id": shadow-
+		),
+		"values": (
+      functions.add-opacity(functions.map-flatten-cti($tokens, "color"), 0.8)
+		)
+	)
+);
+
+//===============================================================================================================
+// OPACITY
+//===============================================================================================================
+$effects-opacity: (
+  "opacity": (
+		"configs": (
+      "css-vars": true,
+      "css-vars-id": opacity-,
+      "css-vars-local": (
+        "opacity": [values]
+      )
+		),
+		"values": (
+      "0": 0,
+      "5": 0.05,
+      "10": 0.1,
+      "20": 0.2,
+      "25": 0.25,
+      "30": 0.3,
+      "40": 0.4,
+      "50": 0.5,
+      "60": 0.6,
+      "70": 0.7,
+      "75": 0.75,
+      "80": 0.8,
+      "90": 0.9,
+      "95": 0.95,
+      "100": 1
+		)
+	)
+);
+
+//===============================================================================================================
+// BLEND MODE
+//===============================================================================================================
+$effects-blend-mode: (
+  "mix-blend-mode": (
+		"configs": (
+        "property": (
+				"mix-blend-mode": mix-blend-
+			),
+		),
+		"values": (
+      "normal": normal,
+      "multiply": multiply,
+      "screen": screen,
+      "overlay": overlay,
+      "darken": darken,
+      "lighten": lighten,
+      "color-dodge": color-dodge,
+      "color-burn": color-burn,
+      "hard-light": hard-light,
+      "soft-light": soft-light,
+      "difference": difference,
+      "exclusion": exclusion,
+      "hue": hue,
+      "saturation": saturation,
+      "color": color,
+      "luminosity": luminosity
+		)
+	)
+);
+
+//===============================================================================================================
+// BACKGROUND BLEND MODE
+//===============================================================================================================
+$effects-background-blend-mode: (
+  "background-blend-mode": (
+		"configs": (
+      "property": (
+				"background-blend-mode": bg-blend-
+			),
+		),
+		"values": (
+      "normal": normal,
+      "multiply": multiply,
+      "screen": screen,
+      "overlay": overlay,
+      "darken": darken,
+      "lighten": lighten,
+      "color-dodge": color-dodge,
+      "color-burn": color-burn,
+      "hard-light": hard-light,
+      "soft-light": soft-light,
+      "difference": difference,
+      "exclusion": exclusion,
+      "hue": hue,
+      "saturation": saturation,
+      "color": color,
+      "luminosity": luminosity
+		)
+	)
+);

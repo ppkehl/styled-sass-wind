@@ -1,0 +1,30 @@
+@use "./parcer" as *;
+
+//################################################################################################################
+//
+//   UTILITIES CYCLER
+//
+//################################################################################################################
+
+@mixin utility-cycler($utility-configs:false){
+  @if ($utility-configs!=false and type-of($utility-configs) == map) {
+    @each $utility-name, $utility-map in $utility-configs {
+
+      //-------------------------------------------------------------------
+      //  VAR: Utility property -> Ids
+      //-------------------------------------------------------------------
+      // VAR: Cycler index
+      $i: index(($utility-configs), ($utility-name $utility-map));
+      // VAR: Utility ID
+      $utility-id: ("utility-name": $utility-name, "utility-id": $i);
+
+      //-------------------------------------------------------------------
+      //  MIXIN: Configs Pacer
+      //-------------------------------------------------------------------
+      @include utility-parcer($utility-id, $utility-map);
+
+    }
+  }@else{
+    @warn 'MANDATORY MAP MISSING: The map provided for generate utilities was not found or is not a map.';
+  }
+}

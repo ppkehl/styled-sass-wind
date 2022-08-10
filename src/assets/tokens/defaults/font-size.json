@@ -1,0 +1,44 @@
+{
+  "font-sizes": {
+    "xs": {
+      "value": "0.75rem",
+      "type": "fontSizes"
+    },
+    "sm": {
+      "value": "0.875rem",
+      "type": "fontSizes"
+    },
+    "base": {
+      "value": "1rem",
+      "type": "fontSizes"
+    },
+    "lg": {
+      "value": "1.125rem",
+      "type": "fontSizes"
+    },
+    "xl": {
+      "value": "1.25rem",
+      "type": "fontSizes"
+    },
+    "2xl": {
+      "value": "1.5rem",
+      "type": "fontSizes"
+    },
+    "3xl": {
+      "value": "1.875rem",
+      "type": "fontSizes"
+    },
+    "4xl": {
+      "value": "2.25rem",
+      "type": "fontSizes"
+    },
+    "5xl": {
+      "value": "3rem",
+      "type": "fontSizes"
+    },
+    "6xl": {
+      "value": "4rem",
+      "type": "fontSizes"
+    }
+  }
+}

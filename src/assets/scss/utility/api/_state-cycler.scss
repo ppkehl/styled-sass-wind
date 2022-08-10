@@ -1,0 +1,43 @@
+@use "sass:map";
+
+@use "./router" as *;
+
+//################################################################################################################
+//
+//   STATES CYCLER
+//
+//################################################################################################################
+
+@mixin states-cycler($utility-id, $utility-config, $utility-values, $utility-modifiers) {
+  
+    @each $value-name, $value in $utility-values {
+  
+      // VAR: Cycler
+      $i: index(($utility-values), ($value-name $value));
+      $utility-id: map.set($utility-id, "value-cycle-id", $i);
+      // VAR: State
+      $utility-modifiers: map.set($utility-modifiers, "state", "");
+  
+      //-------------------------------------------------------------------
+      //  MIXIN: Utility router
+      //-------------------------------------------------------------------
+  
+      @include utility-router($utility-id, $utility-config, $value-name, $value, $utility-modifiers);
+  
+      @if (map-get($utility-config, "state")) {
+        @each $state in map-get($utility-config, "state") {
+          // VAR: Cycler
+          $i: index((map-get($utility-config, "state")), ($state));
+          $utility-id: map.set($utility-id, "state-cycle-id", $i);
+          // VAR: State
+          $utility-modifiers: map.set($utility-modifiers, "state", $state);
+  
+          //-------------------------------------------------------------------
+          //  MIXIN: Utility router
+          //-------------------------------------------------------------------
+  
+          @include utility-router($utility-id, $utility-config, $value-name, $value, $utility-modifiers);
+        }
+      }
+    }
+  }

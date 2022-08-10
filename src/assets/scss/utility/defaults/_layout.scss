@@ -1,0 +1,471 @@
+@use "../utils/functions";
+@use "../../abstracts/tokens" as *;
+
+//################################################################################################################
+//
+//    CONFIGS: LAYOUT
+//
+//    "configs":
+//    "property": 
+//         (
+//          "css-property": "css-naming",
+//          "other-css-property": "other-css-naming"
+//         ), 
+//    "css-selector": false | string (special CSS selector ex: * + *)             
+//    "css-vars-only": false | true (export only the CSS vars)
+//    "css-vars": false | true (export the CSS vars as :root)
+//    "css-vars-local": false | string (generate the CSS vars as local vars)
+//    "dark-mode": false | class | media (generate the classes, media queries and/or classes for dark mode)
+//    "responsive": true | false (generate the responsive classes and media queries)
+//    "state": hover focus (generate states classes and prefixes for each state)
+//
+//################################################################################################################
+
+//===============================================================================================================
+// ASPECT RATIOS
+//===============================================================================================================
+$layout-aspect-ratios: (
+  "aspect-ratio":(
+    "configs": (
+      "property": (
+        "padding-top": aspect-ratio--
+      ),
+      "responsive": true,
+      "css-vars": true,
+      "css-selector": ":before"
+    ),
+    "values": (
+      functions.map-flatten-cti($tokens, "ratio")
+    ),
+  ), 
+);
+
+//===============================================================================================================
+// COLUMN SYSTEM
+//===============================================================================================================
+$layout-columns-system: (
+  "columns-system":(
+      "configs": (
+        "property": (
+          "width": col-,
+          "margin-left": col-offset-
+        ),
+        "css-vars-only": false,
+        "css-vars": true,
+        "css-vars-local": false,
+        "responsive": true
+      ),
+      "values": (
+        functions.generate-col-values(12)
+    ),
+  )
+);
+
+//===============================================================================================================
+// BREAK AFTER
+//===============================================================================================================
+$layout-break-after: (
+  "break-after":(
+    "configs": (
+      "property": (
+        "break-after": break-after-
+      )
+    ),
+    "values": (
+      "auto": auto,
+      "avoid": avoid,
+      "all": all,
+      "avoid-page": avoid-page,
+      "page": page,
+      "left": left,
+      "right": right,
+      "column": column
+    )
+  )
+);
+
+//===============================================================================================================
+// BREAK BEFORE
+//===============================================================================================================
+$layout-break-before: (
+  "break-before":(
+    "configs": (
+      "property": (
+        "break-after": break-before-
+      )
+    ),
+    "values": (
+      "auto": auto,
+      "avoid": avoid,
+      "all": all,
+      "avoid-page": avoid-page,
+      "page": page,
+      "left": left,
+      "right": right,
+      "column": column
+    )
+  )
+);
+
+//===============================================================================================================
+// BREAK INSIDE
+//===============================================================================================================
+$layout-break-inside: (
+  "break-inside":(
+    "configs": (
+      "property": (
+        "break-after": break-inside-
+      )
+    ),
+    "values": (
+      "auto": auto,
+      "avoid": avoid,
+      "avoid-page": avoid-page,
+      "avoid-column": avoid-column
+    )
+  )
+);
+
+//===============================================================================================================
+// BOX DECORATION BREAK
+//===============================================================================================================
+$layout-box-decoration-break: (
+  "box-decoration":(
+    "configs": (
+      "property": (
+        "break-after": box-decoration-
+      )
+    ),
+    "values": (
+      "clone": clone,
+      "slice": slice
+    )
+  )
+);
+
+//===============================================================================================================
+// BOX SIZING
+//===============================================================================================================
+$layout-box-sizing: (
+  "box-sizing":(
+    "configs": (
+      "property": (
+        "box-sizing": box-
+      )
+    ),
+    "values": (
+      "border": border-box,
+      "content": content-box
+    )
+  )
+);
+
+//===============================================================================================================
+// DISPLAY
+//===============================================================================================================
+$layout-display: (
+  "display":(
+    "configs": (
+      "property": (
+        "display": ""
+      )
+    ),
+    "values": (
+      "block": block,
+      "inline-block": inline-block,
+      "inline": inline,
+      "flex": flex,
+      "inline-flex": inline-flex,
+      "table": table,
+      "inline-table": inline-table,
+      "table-caption": table-caption,
+      "table-cell": table-cell,
+      "table-column": table-column,
+      "table-column-group": table-column-group,
+      "table-footer-group": table-footer-group,
+      "table-header-group": table-header-group,
+      "table-row-group": table-row-group,
+      "table-row": table-row,
+      "flow-root": flow-root,
+      "grid": grid,
+      "inline-grid": inline-grid,
+      "contents": contents,
+      "list-item": list-item,
+      "hidden": none,
+    )
+  )
+);
+
+//===============================================================================================================
+// FLOAT
+//===============================================================================================================
+$layout-float: (
+	"float":(
+    "values": (
+      "right": right,
+      "left": left,
+      "none": none,
+    )
+  )
+);
+
+//===============================================================================================================
+// CLEAR
+//===============================================================================================================
+$layout-clear: (
+	"clear":(
+    "values": (
+      "left": left,
+      "right": right,
+      "both": both,
+      "none": none,
+    )
+  )
+);
+
+//===============================================================================================================
+// ISOLATION
+//===============================================================================================================
+$layout-isolation: (
+	"isolation":(
+    "configs": (
+      "property": (
+        "isolation": ""
+      )
+    ),
+    "values": (
+      "isolation": isolate,
+			"isolation-auto": auto
+    )
+  )
+);
+
+//===============================================================================================================
+// OBJECT FIT
+//===============================================================================================================
+$layout-object-fit: (
+"object-fit":(
+    "configs": (
+      "property": (
+        "object-fit": object-
+      )
+    ),
+    "values": (
+      "contain": contain,
+      "cover": cover,
+      "fill": fill,
+      "none": none,
+      "scale-down": scale-down,
+    )
+  )
+);
+
+//===============================================================================================================
+// OBJECT POSITION
+//===============================================================================================================
+$layout-object-position: (
+	"object-position":(
+		"configs": (
+			"property": (
+				"object-position": object-
+			)
+		),
+		"values": (
+			"bottom": bottom,
+			"center": center,
+			"left": left,
+			"left-bottom": left bottom,
+			"left-top": left top,
+			"right": right,
+			"right-bottom": right bottom,
+			"right-top": right top,
+			"top": top,
+		)
+	)
+);
+
+//===============================================================================================================
+// OVERFLOW
+//===============================================================================================================
+$layout-overflow: (
+	"overflow":(
+    "values": (
+      "auto": auto,
+      "hidden": hidden,
+      "clip": clip,
+      "visible": visible,
+      "scroll": scroll,
+    )
+  )
+);
+
+//===============================================================================================================
+// OVERSCROLL BEHAVIOR
+//===============================================================================================================
+$layout-overscroll: (
+	//------------------------------------------------------------------------------------------
+  //  Overscroll
+  //------------------------------------------------------------------------------------------
+  "overscroll-behavior":(
+    "configs": (
+      "property": (
+        "overscroll-behavior": overscroll-
+      )
+    ),
+    "values": (
+      "auto": auto,
+      "contain": contain,
+      "none": none,
+    )
+  ),
+
+  //------------------------------------------------------------------------------------------
+  //  Overscroll X
+  //------------------------------------------------------------------------------------------
+  "overscroll-behavior-x":(
+    "configs": (
+      "property": (
+        "overscroll-behavior": overscroll-x-
+      )
+    ),
+    "values": (
+      "auto": auto,
+      "contain": contain,
+      "none": none,
+    )
+  ),
+
+  //------------------------------------------------------------------------------------------
+  //  Overscroll Y
+  //------------------------------------------------------------------------------------------
+  "overscroll-behavior-y":(
+    "configs": (
+      "property": (
+        "overscroll-behavior": overscroll-y-
+      )
+    ),
+    "values": (
+      "auto": auto,
+      "contain": contain,
+      "none": none,
+    )
+  )
+);
+
+//===============================================================================================================
+// POSITION
+//===============================================================================================================
+$layout-position: (
+	"position":(
+    "configs": (
+      "property": (
+        "position": ""
+      )
+    ),
+    "values": (
+      "static": static,
+      "fixed": fixed,
+      "absolute": absolute,
+      "relative": relative,
+      "sticky": sticky,
+    )
+  )
+);
+
+//===============================================================================================================
+// TOP / RIGHT / BOTTOM / LEFT
+//===============================================================================================================
+$layout-top-left-bottom-left: (
+	//------------------------------------------------------------------------------------------
+  //  All: [Top | Right | Bottom | Left]
+  //------------------------------------------------------------------------------------------
+	"all":(
+    "configs": (
+      "property": (
+        ("top","right", "left", "bottom"): inset-,
+      ),
+      "ext-css-vars": true,
+      "css-vars-id": spc-,
+    ),
+    "values": (
+      functions.filter-token-map($tokens, "size-base-")
+    )
+  ),
+
+	//------------------------------------------------------------------------------------------
+  //  X/Y Axis: [Right | Left] | [Top | Bottom ]
+  //------------------------------------------------------------------------------------------
+	"x-y-axis":(
+    "configs": (
+      "property": (
+        ("right", "left"): inset-x-,
+				("top", "bottom"): inset-y-
+      ),
+      "ext-css-vars": true,
+      "css-vars-id": spc-,
+    ),
+    "values": (
+      functions.filter-token-map($tokens, "size-base-")
+    )
+  ),
+
+	//------------------------------------------------------------------------------------------
+  //  Individual: [Top] | [Right] | [Bottom] | [Left]
+  //------------------------------------------------------------------------------------------
+	"individual":(
+    "configs": (
+      "property": (
+        "top": top-,
+        "right": right-,
+        "left": left-,
+        "bottom": bottom-,
+      ),
+      "ext-css-vars": true,
+      "css-vars-id": spc-,
+    ),
+    "values": (
+      functions.filter-token-map($tokens, "size-base-")
+    )
+  )
+);
+
+//===============================================================================================================
+// VISIBILITY
+//===============================================================================================================
+$layout-visibility: (
+"visibility":
+  (
+    "configs": (
+      "property": (
+        "visibility": ""
+      )
+    ),
+    "values": (
+      "visible": visible,
+      "invisible": hidden
+    )
+  )
+);
+
+//===============================================================================================================
+// Z-INDEX
+//===============================================================================================================
+$layout-z-index: (
+	"z-index":(
+    "configs": (
+      "property": (
+        "z-index": z-
+      )
+    ),
+    "values": (
+      "0": 0,
+      "10": 10,
+      "20": 20,
+      "30": 30,
+      "40": 40,
+      "50": 50,
+      "999": 999,
+      "auto": auto
+    )
+  )
+)

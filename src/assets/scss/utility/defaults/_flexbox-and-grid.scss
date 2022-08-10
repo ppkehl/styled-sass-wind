@@ -1,0 +1,617 @@
+@use "../utils/functions";
+@use "../../abstracts/tokens" as *;
+
+//################################################################################################################
+//
+//    CONFIGS: FLEX AND GRID
+//
+//    "configs":
+//    "property": 
+//         (
+//          "css-property": "css-naming",
+//          "other-css-property": "other-css-naming"
+//         ), 
+//    "css-selector": false | string (special CSS selector ex: * + *)             
+//    "css-vars-only": false | true (export only the CSS vars)
+//    "css-vars": false | true (export the CSS vars as :root)
+//    "css-vars-local": false | string (generate the CSS vars as local vars)
+//    "dark-mode": false | class | media (generate the classes, media queries and/or classes for dark mode)
+//    "responsive": true | false (generate the responsive classes and media queries)
+//    "state": hover focus (generate states classes and prefixes for each state)
+//
+//################################################################################################################
+
+//===============================================================================================================
+// FLEX BASIS
+//===============================================================================================================
+$flexbox-and-grid-flex-basis: (
+	"flex-basis": (
+		"configs": (
+			"property": (
+				"flex-basis": basis-
+				),
+		),
+		"values": (
+			functions.map-flatten-cti($tokens, "size", "base")
+		)
+	)
+);
+
+//===============================================================================================================
+// FLEX DIRECTION
+//===============================================================================================================
+$flexbox-and-grid-flex-direction: (
+	"flex-direction": (
+		"configs": (
+			"property": (
+				"flex-direction": flex-
+				),
+		),
+		"values": (
+			"row": row,
+			"row-reverse": row-reverse,
+			"col": column,
+			"col-reverse": column-reverse
+		)
+	)
+);
+
+//===============================================================================================================
+// FLEX WRAP
+//===============================================================================================================
+$flexbox-and-grid-flex-wrap: (
+	"flex-wrap": (
+		"configs": (
+			"property": (
+				"flex-wrap": flex-
+				),
+		),
+		"values": (
+			"wrap": wrap,
+			"wrap-reverse": wrap-reverse,
+			"nowrap": nowrap
+		)
+	)
+);
+
+//===============================================================================================================
+// FLEX
+//===============================================================================================================
+$flexbox-and-grid-flex: (
+	"flex": (
+		"values": (
+			"1": 1 1 0%,
+			"auto": 1 1 auto,
+			"initial": 0 1 auto,
+			"none": none
+		)
+	)
+);
+
+//===============================================================================================================
+// FLEX GROW
+//===============================================================================================================
+$flexbox-and-grid-flex-grow: (
+	"flex-grow": (
+		"configs": (
+			"property": (
+				"flex-grow": ""
+				),
+		),
+		"values": (
+			"grow-0": 0,
+			"grow": 1
+		)
+	)
+);
+
+//===============================================================================================================
+// FLEX SHRINK
+//===============================================================================================================
+$flexbox-and-grid-shrink: (
+	"flex-shrink": (
+		"configs": (
+			"property": (
+				"flex-shrink": flex-
+				),
+		),
+		"values": (
+			"shrink-0": 0,
+			"shrink": 1
+		)
+	)
+);
+
+//===============================================================================================================
+// ORDER
+//===============================================================================================================
+$flexbox-and-grid-order: (
+	"order": (
+		"values": (
+			"1": 1,
+			"2": 2,
+			"3": 3,
+			"4": 4,
+			"5": 5,
+			"6": 6,
+			"7": 7,
+			"8": 8,
+			"9": 9,
+			"10": 10,
+			"11": 11,
+			"12": 12,
+			"first": -9999,
+			"last": 9999,
+			"none": 0
+		)
+	)
+);
+
+//===============================================================================================================
+// GRID TEMPLATE COLUMNS
+//===============================================================================================================
+$flexbox-and-grid-grid-template-columns: (
+	"grid-template-columns": (
+		"configs": (
+			"property": (
+				"grid-template-columns": grid-
+				),
+		),
+		"values": (
+			"cols-1": "repeat(1, minmax(0, 1fr))",
+			"cols-2": "repeat(2, minmax(0, 1fr))",
+			"cols-3": "repeat(3, minmax(0, 1fr))",
+			"cols-4": "repeat(4, minmax(0, 1fr))",
+			"cols-5": "repeat(5, minmax(0, 1fr))",
+			"cols-6": "repeat(6, minmax(0, 1fr))",
+			"cols-7": "repeat(7, minmax(0, 1fr))",
+			"cols-8": "repeat(8, minmax(0, 1fr))",
+			"cols-9": "repeat(9, minmax(0, 1fr))",
+			"cols-10": "repeat(10, minmax(0, 1fr))",
+			"cols-11": "repeat(11, minmax(0, 1fr))",
+			"cols-12": "repeat(12, minmax(0, 1fr))",
+			"none": none
+		)
+	)
+);
+
+//===============================================================================================================
+// GRID COLUMN START / END
+//===============================================================================================================
+$flexbox-and-grid-grid-column-start-end: (
+	//------------------------------------------------------------------------------------------
+  //  Grid column span
+  //------------------------------------------------------------------------------------------
+	"grid-column-span": (
+		"configs": (
+			"property": (
+				"grid-column": col-
+				),
+		),
+		"values": (
+			"auto": auto,
+			"span-1": "span 1 / span 1",
+			"span-2": "span 2 / span 2",
+			"span-3": "span 3 / span 3",
+			"span-4": "span 4 / span 4",
+			"span-5": "span 5 / span 5",
+			"span-6": "span 6 / span 6",
+			"span-7": "span 7 / span 7",
+			"span-8": "span 8 / span 8",
+			"span-9": "span 9 / span 8",
+			"span-10": "span 10 / span 10",
+			"span-11": "span 11 / span 11",
+			"span-12": "span 12 / span 12",
+			"span-full": "1 / -1"
+		)
+	),
+
+	//------------------------------------------------------------------------------------------
+	//  Grid column start
+	//------------------------------------------------------------------------------------------
+	"grid-column-start": (
+		"configs": (
+			"property": (
+				"grid-column-start": col-start-
+				),
+		),
+		"values": (
+			"1": 1,
+			"2": 2,
+			"3": 3,
+			"4": 4,
+			"5": 5,
+			"6": 6,
+			"7": 7,
+			"8": 8,
+			"9": 9,
+			"10": 10,
+			"11": 11,
+			"12": 12,
+			"13": 13,
+			"auto": auto
+		)
+	),
+
+	//------------------------------------------------------------------------------------------
+  //  Grid column end
+  //------------------------------------------------------------------------------------------
+	"grid-column-end": (
+		"configs": (
+			"property": (
+				"grid-column-end": col-end-
+				),
+		),
+		"values": (
+			"1": 1,
+			"2": 2,
+			"3": 3,
+			"4": 4,
+			"5": 5,
+			"6": 6,
+			"7": 7,
+			"8": 8,
+			"9": 9,
+			"10": 10,
+			"11": 11,
+			"12": 12,
+			"13": 13,
+			"auto": auto
+		)
+	)
+);
+
+//===============================================================================================================
+// GRID TEMPLATE ROWS
+//===============================================================================================================
+$flexbox-and-grid-grid-template-rows: (
+	"grid-template-rows": (
+		"configs": (
+			"property": (
+				"grid-template-rows": grid-
+				),
+		),
+		"values": (
+			"rows-1": "repeat(1, minmax(0, 1fr))",
+			"rows-2": "repeat(2, minmax(0, 1fr))",
+			"rows-3": "repeat(3, minmax(0, 1fr))",
+			"rows-4": "repeat(4, minmax(0, 1fr))",
+			"rows-5": "repeat(5, minmax(0, 1fr))",
+			"rows-6": "repeat(6, minmax(0, 1fr))",
+			"rows-7": "repeat(7, minmax(0, 1fr))",
+			"rows-8": "repeat(8, minmax(0, 1fr))",
+			"rows-9": "repeat(9, minmax(0, 1fr))",
+			"rows-10": "repeat(10, minmax(0, 1fr))",
+			"rows-11": "repeat(11, minmax(0, 1fr))",
+			"rows-12": "repeat(12, minmax(0, 1fr))",
+			"rows-none": none
+		)
+	)
+);
+
+
+//===============================================================================================================
+// GRID ROW START / END
+//===============================================================================================================
+$flexbox-and-grid-grid-row-start-end: (
+	//------------------------------------------------------------------------------------------
+  //  Grid row span
+  //------------------------------------------------------------------------------------------
+	"grid-row-span": (
+		"configs": (
+			"property": (
+				"grid-row": row-
+				),
+		),
+		"values": (
+			"auto": auto,
+			"span-1": "span 1 / span 1",
+			"span-2": "span 2 / span 2",
+			"span-3": "span 3 / span 3",
+			"span-4": "span 4 / span 4",
+			"span-5": "span 5 / span 5",
+			"span-6": "span 6 / span 6",
+			"span-full": "1 / -1"
+		)
+	),
+
+	//------------------------------------------------------------------------------------------
+	//  Grid row start
+	//------------------------------------------------------------------------------------------
+	"grid-row-start": (
+		"configs": (
+			"property": (
+				"grid-row-start": row-start-
+				),
+		),
+		"values": (
+			"1": 1,
+			"2": 2,
+			"3": 3,
+			"4": 4,
+			"5": 5,
+			"6": 6,
+			"7": 7,
+			"auto": auto
+		)
+	),
+
+	//------------------------------------------------------------------------------------------
+  //  Grid row end
+  //------------------------------------------------------------------------------------------
+	"grid-row-end": (
+		"configs": (
+			"property": (
+				"grid-row-end": row-end-
+				),
+		),
+		"values": (
+			"1": 1,
+			"2": 2,
+			"3": 3,
+			"4": 4,
+			"5": 5,
+			"6": 6,
+			"7": 7,
+			"auto": auto
+		)
+	)
+);
+
+//===============================================================================================================
+// GRID AUTO FLOW
+//===============================================================================================================
+$flexbox-and-grid-grid-auto-flow: (
+	"grid-auto-flow": (
+		"configs": (
+			"property": (
+				"grid-auto-flow": grid-flow-
+				),
+		),
+		"values": (
+			"row": row,
+			"col": column,
+			"row-dense": row dense,
+			"col-dense": column dense,
+		)
+	)
+);
+
+//===============================================================================================================
+// GRID AUTO COLUMNS
+//===============================================================================================================
+$flexbox-and-grid-grid-auto-columns: (
+	"grid-auto-columns": (
+		"configs": (
+			"property": (
+				"grid-auto-columns": auto-cols-
+				),
+		),
+		"values": (
+			"auto": auto,
+			"min": min-content,
+			"max": max-content,
+			"fr": "minmax(0, 1fr)"
+		)
+	)
+);
+
+//===============================================================================================================
+// GRID AUTO ROWS
+//===============================================================================================================
+$flexbox-and-grid-grid-auto-rows: (
+	"grid-auto-rows": (
+		"configs": (
+			"property": (
+				"grid-auto-rows": auto-rows-
+				),
+		),
+		"values": (
+			"auto": auto,
+			"min": min-content,
+			"max": max-content,
+			"fr": "minmax(0, 1fr)"
+		)
+	)
+);
+
+//===============================================================================================================
+// GAP
+//===============================================================================================================
+$flexbox-and-grid-gap: (
+	//------------------------------------------------------------------------------------------
+  //  Gap All: [Top | Right | Bottom | Left]
+  //------------------------------------------------------------------------------------------
+  "gap-all":(
+  	"configs": (
+    	"property": (
+      	"gap": gap-
+    	),
+    	"ext-css-vars": true,
+    	"css-vars-id": spc-
+    ),
+    "values": (
+      functions.map-flatten-cti($tokens, "size", "base")
+    )
+  ),
+
+	//------------------------------------------------------------------------------------------
+  //  Gap X/Y : [Right | Left] | [Top | Bottom ]
+  //------------------------------------------------------------------------------------------
+  "gap-x-y":(
+  	"configs": (
+    	"property": (
+      	"column-gap": gap-x-,
+      	"row-gap": gap-y-,
+    	),
+    	"ext-css-vars": true,
+    	"css-vars-id": spc-
+    ),
+    "values": (
+      functions.map-flatten-cti($tokens, "size", "base")
+    )
+  )
+);
+
+//===============================================================================================================
+// JUSTIFY CONTENT
+//===============================================================================================================
+$flexbox-and-grid-justify-content: (
+	"justify-content": (
+		"configs": (
+			"property": (
+				"justify-content": justify-
+				),
+		),
+		"values": (
+			"start": flex-start,
+			"end": flex-end,
+			"center": center,
+			"between": space-between,
+			"around": space-around,
+			"evenly": space-evenly
+		)
+	)
+);
+
+//===============================================================================================================
+// JUSTIFY ITEMS
+//===============================================================================================================
+$flexbox-and-grid-justify-items: (
+	"justify-items": (
+		"configs": (
+			"property": (
+				"justify-items": justify-items-
+				),
+		),
+		"values": (
+			"start": flex-start,
+			"end": flex-end,
+			"center": center,
+			"stretch": stretch
+		)
+	)
+);
+
+//===============================================================================================================
+// JUSTIFY SELF
+//===============================================================================================================
+$flexbox-and-grid-justify-self: (
+	"justify-self": (
+		"values": (
+			"auto": auto,
+			"start": start,
+			"end": end,
+			"center": center,
+			"stretch": stretch,
+		)
+	)
+);
+
+//===============================================================================================================
+// ALIGN CONTENT
+//===============================================================================================================
+$flexbox-and-grid-align-content: (
+	"align-content": (
+		"configs": (
+			"property": (
+				"align-content": content-
+				),
+		),
+		"values": (
+			"start": flex-start,
+			"end": flex-end,
+			"center": center,
+			"between": space-between,
+			"around": space-around,
+			"evenly": space-evenly
+		)
+	)
+);
+
+//===============================================================================================================
+// ALIGN ITEMS
+//===============================================================================================================
+$flexbox-and-grid-align-items: (
+	"align-items":(
+    "configs": (
+      "property": (
+        "align-items": items-
+      ),
+    ),
+    "values": (
+      "start": flex-start,
+      "end": flex-end,
+      "center": center,
+      "baseline": baseline,
+      "stretch": stretch
+    ),
+  )
+);
+
+//===============================================================================================================
+// ALIGN ITEMS
+//===============================================================================================================
+$flexbox-and-grid-align-self: (
+	"align-self": (
+		"configs": (
+			"property": (
+				"align-self": self-
+				),
+		),
+		"values": (
+			"auto": auto,
+			"start": flex-start,
+			"end": flex-end,
+			"center": center,
+			"baseline": baseline,
+			"stretch": stretch,
+		)
+	)
+);
+
+//===============================================================================================================
+// PLACE CONTENT
+//===============================================================================================================
+$flexbox-and-grid-place-content: (
+	"place-content": (
+		"values": (
+			"center": center,
+			"start": start,
+			"end": end,
+			"between": space-between,
+			"around": space-around,
+			"evenly": space-evenly,
+			"stretch": stretch
+		)
+	)
+);
+
+//===============================================================================================================
+// PLACE ITEMS
+//===============================================================================================================
+$flexbox-and-grid-place-items: (
+	"place-items": (
+		"values": (
+			"center": center,
+			"start": start,
+			"end": end,
+			"stretch": stretch
+		)
+	)
+);
+
+//===============================================================================================================
+// PLACE SELF
+//===============================================================================================================
+$flexbox-and-grid-place-self: (
+	"place-self": (
+		"values": (
+			"auto": auto,
+			"center": center,
+			"start": start,
+			"end": end,
+			"stretch": stretch
+		)
+	)
+);

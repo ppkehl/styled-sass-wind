@@ -1,0 +1,136 @@
+{
+  "breakpoints": {
+    "xs": {
+      "breakpoint": {
+        "value": "20rem",
+        "type": "sizing"
+      },
+      "gutter": {
+        "value": "1rem",
+        "type": "spacing"
+      },
+      "column-margin": {
+        "value": "1rem",
+        "type": "spacing"
+      },
+      "base-font-size": {
+        "value": "16px",
+        "type": "fontSizes"
+      },
+      "max-width": {
+        "value": "75rem",
+        "type": "sizing"
+      }
+    },
+    "mx": {
+      "breakpoint": {
+        "value": "40.625rem",
+        "type": "sizing"
+      },
+      "gutter": {
+        "value": "2rem",
+        "type": "spacing"
+      },
+      "column-margin": {
+        "value": "2rem",
+        "type": "spacing"
+      },
+      "base-font-size": {
+        "value": "16px",
+        "type": "fontSizes"
+      },
+      "max-width": {
+        "value": "75rem",
+        "type": "sizing"
+      }
+    },
+    "md": {
+      "breakpoint": {
+        "value": "50rem",
+        "type": "sizing"
+      },
+      "gutter": {
+        "value": "2rem",
+        "type": "spacing"
+      },
+      "column-margin": {
+        "value": "2rem",
+        "type": "spacing"
+      },
+      "base-font-size": {
+        "value": "16px",
+        "type": "fontSizes"
+      },
+      "max-width": {
+        "value": "75rem",
+        "type": "sizing"
+      }
+    },
+    "lg": {
+      "breakpoint": {
+        "value": "64rem",
+        "type": "sizing"
+      },
+      "gutter": {
+        "value": "2rem",
+        "type": "spacing"
+      },
+      "column-margin": {
+        "value": "2rem",
+        "type": "spacing"
+      },
+      "base-font-size": {
+        "value": "16px",
+        "type": "fontSizes"
+      },
+      "max-width": {
+        "value": "75rem",
+        "type": "sizing"
+      }
+    },
+    "xl": {
+      "breakpoint": {
+        "value": "90rem",
+        "type": "sizing"
+      },
+      "gutter": {
+        "value": "2rem",
+        "type": "spacing"
+      },
+      "column-margin": {
+        "value": "2rem",
+        "type": "spacing"
+      },
+      "base-font-size": {
+        "value": "16px",
+        "type": "fontSizes"
+      },
+      "max-width": {
+        "value": "75rem",
+        "type": "sizing"
+      }
+    },
+    "xxl": {
+      "breakpoint": {
+        "value": "120rem",
+        "type": "sizing"
+      },
+      "gutter": {
+        "value": "2rem",
+        "type": "spacing"
+      },
+      "column-margin": {
+        "value": "2rem",
+        "type": "spacing"
+      },
+      "base-font-size": {
+        "value": "16px",
+        "type": "fontSizes"
+      },
+      "max-width": {
+        "value": "75rem",
+        "type": "sizing"
+      }
+    }
+  }
+}

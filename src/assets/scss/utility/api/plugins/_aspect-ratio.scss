@@ -1,0 +1,66 @@
+@use "sass:map";
+@use "sass:list";
+
+@use "../generator" as *;
+@use "../../utils/" as *;
+
+//################################################################################################################
+//
+//   ASPECT RATIOS PLUGIN
+//
+//################################################################################################################
+
+@mixin utility-aspect-ratio($utility-id, $utility-config, $value-name, $value, $utility-modifiers) {
+
+  // VAR: Prefix
+  $prefix: map.get($utility-modifiers, "prefix");
+  // VAR: Property
+  $class-property: nth(nth(map.get($utility-config, "property"), 1), 2);
+
+  @if(map.get($utility-config, "utility-first-pass") == true) {
+
+    //----------------------------------------------------------------------------
+    // Static classes
+    //----------------------------------------------------------------------------
+
+    [class*="#{$class-property}"] {
+      >*{
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+      }
+      &:before {
+        content: "";
+        display: block;
+        width: 100%;
+      }
+    }
+
+  }
+
+  @if(map.get($utility-config, "media-query-first-pass") == true) {
+
+    //----------------------------------------------------------------------------
+    // Generated classes
+    //----------------------------------------------------------------------------
+
+    .#{$prefix}#{$class-property}clear {
+      &:before {
+        padding-top: 0;
+      }
+
+      >* {
+        position: relative;
+      }
+    }
+
+  }
+
+  //----------------------------------------------------------------------------
+  // Generated classes
+  //----------------------------------------------------------------------------
+
+  @include utility-generator($utility-id, $utility-config, $value-name, $value, $utility-modifiers);
+}

@@ -1,0 +1,474 @@
+@use "../utils/functions";
+@use "../../abstracts/tokens" as *;
+
+//################################################################################################################
+//
+//    CONFIGS: TYPOGRAPHY
+//
+//    "configs":
+//    "property": 
+//         (
+//          "css-property": "css-naming",
+//          "other-css-property": "other-css-naming"
+//         ), 
+//    "css-selector": false | string (special CSS selector ex: * + *)             
+//    "css-vars-only": false | true (export only the CSS vars)
+//    "css-vars": false | true (export the CSS vars as :root)
+//    "css-vars-local": false | string (generate the CSS vars as local vars)
+//    "dark-mode": false | class | media (generate the classes, media queries and/or classes for dark mode)
+//    "responsive": true | false (generate the responsive classes and media queries)
+//    "state": hover focus (generate states classes and prefixes for each state)
+//
+//################################################################################################################
+
+//===============================================================================================================
+// FONT FAMILY
+//===============================================================================================================
+$typography-font-family: (
+	"font-family": (
+		"configs": (
+			"property": (
+				"font-family": font-
+			)
+		),
+		"values": (
+			functions.map-flatten-cti($tokens, "font-family")
+		)
+	)
+);
+
+//===============================================================================================================
+// FONT SIZE
+//===============================================================================================================
+$typography-font-size: (
+	"font-size": (
+		"configs": (
+			"property": (
+				"font-size": text-
+			),
+			"css-vars": true,
+		),
+		"values": (
+			functions.map-flatten-cti($tokens, "font-sizes")
+		)
+	)
+);
+
+//===============================================================================================================
+// FONT SMOOTHING
+//===============================================================================================================
+$typography-font-smoothing: (
+	"font-smoothing": (
+		"configs": (
+			"property": (
+				"": ""
+			),
+			"responsive": false,
+		),
+		"values": (
+			"antialiased": "-webkit-font-smoothing: antialiased;-moz-osx-font-smoothing: grayscale;",
+			"subpixel-antialiased": "-webkit-font-smoothing: auto;-moz-osx-font-smoothing: auto;"
+		)
+	)
+);
+
+//===============================================================================================================
+// FONT STYLE
+//===============================================================================================================
+$typography-font-style: (
+	"font-style": (
+		"configs": (
+			"property": (
+				"font-style": ""
+			),
+		),
+		"values": (
+			"italic": italic,
+			"non-italic": normal,
+		)
+	)
+);
+
+//===============================================================================================================
+// FONT WEIGHT
+//===============================================================================================================
+$typography-font-weight: (
+	"font-weight": (
+		"configs": (
+			"property": (
+				"font-weight": font-
+			),
+		),
+		"values": (
+			"hairline": 100,
+			"thin": 200,
+			"light": 300,
+			"normal": 400,
+			"medium": 500,
+			"semibold": 600,
+			"bold": 700,
+			"extrabold": 800,
+			"black": 900,
+		),
+	)
+);
+
+//===============================================================================================================
+// FONT VARIANT NUMERIC
+//===============================================================================================================
+$typography-font-variant-numeric: (
+	"font-variant-numeric": (
+		"configs": (
+			"property": (
+				"font-variant-numeric": ""
+			),
+		),
+		"values": (
+			"normal-nums":normal,
+			"ordinal":ordinal,
+			"slashed-zero":slashed-zero,
+			"lining-nums":lining-nums,
+			"oldstyle-nums":oldstyle-nums,
+			"proportional-nums":proportional-nums,
+			"tabular-nums":tabular-nums,
+			"diagonal-fractions":diagonal-fractions,
+			"stacked-fractions":stacked-fractions
+		)
+	)
+);
+
+//===============================================================================================================
+// LETTER SPACING
+//===============================================================================================================
+$typography-letter-spacing: (
+	"letter-spacing": (
+		"configs": (
+			"property": (
+				"letter-spacing": tracking-
+			),
+		),
+		"values": (
+			"tracking-tighter":-0.05em,
+			"tracking-tight":-0.025em,
+			"tracking-normal":0em,
+			"tracking-wide":0.025em,
+			"tracking-wider":0.05em,
+			"tracking-widest":0.1em
+		)
+	)
+);
+
+//===============================================================================================================
+// LINE HEIGHT
+//===============================================================================================================
+$typography-line-height: (
+	"line-height": (
+		"configs": (
+			"property": (
+				"line-height": leading-
+			),
+		),
+		"values": (
+			functions.map-flatten-cti($tokens, "line-height")
+		)
+	)
+);
+
+//===============================================================================================================
+// LIST STYLE TYPE
+//===============================================================================================================
+$typography-list-style-type: (
+	"list-style": (
+		"configs": (
+			"property": (
+				"list-style-type": list-
+				),
+		),
+		"values": (
+			"none": none,
+			"disc": disc,
+			"decimal": decimal
+		)
+	)
+);
+
+//===============================================================================================================
+// LIST STYLE POSITION
+//===============================================================================================================
+$typography-list-style-position: (
+	"list-style-position": (
+		"configs": (
+			"property": (
+				"list-style-position": list-
+				),
+		),
+		"values": (
+			"inside": inside,
+			"outside": outside,
+		)
+	)
+);
+
+//===============================================================================================================
+// TEXT ALIGN
+//===============================================================================================================
+$typography-text-align: (
+	"text-align": (
+		"configs": (
+			"property": (
+				"text-align": ""
+			),
+		),
+		"values": (
+			"tr": right,
+			"tc": center,
+			"tl": left,
+			"tj": justify,
+		)
+	)
+);
+
+//===============================================================================================================
+// TEXT COLOR
+//===============================================================================================================
+$typography-text-color: (
+  "text-color": (
+		"configs": (
+			"property": (
+				"color": text-
+			),
+			"dark-mode": class,
+			"css-vars-id": color-,
+			"ext-css-vars": true,
+			"state": hover
+		),
+		"values": (
+      functions.map-flatten-cti($tokens, "color")
+		)
+	)
+);
+
+//===============================================================================================================
+// TEXT DECORATION
+//===============================================================================================================
+$typography-text-decoration: (
+	"text-decoration": (
+		"configs": (
+			"property": (
+				"text-decoration": ""
+			),
+		),
+		"values": (
+      "underline": underline,
+			"overline": overline,
+			"line-through": line-through,
+			"no-underline": none
+		)
+	)
+);
+
+//===============================================================================================================
+// TEXT DECORATION COLOR
+//===============================================================================================================
+$typography-text-decoration-color: (
+	"text-decoration-color": (
+		"configs": (
+			"property": (
+				"text-decoration-color": decoration-
+			),
+			"css-vars-id": color-,
+			"ext-css-vars": true
+		),
+		"values": (
+      functions.map-flatten-cti($tokens, "color")
+		)
+	)
+);
+
+//===============================================================================================================
+// TEXT DECORATION STYLE
+//===============================================================================================================
+$typography-text-decoration-style: (
+	"text-decoration-style": (
+		"configs": (
+			"property": (
+				"text-decoration-style": decoration-
+			),
+		),
+		"values": (
+      "solid": solid,
+			"double": double,
+			"dotted": dotted,
+			"dashed": dashed,
+			"wavy": wavy
+		)
+	)
+);
+
+//===============================================================================================================
+// TEXT DECORATION THICKNESS 
+//===============================================================================================================
+$typography-text-decoration-thickness: (
+	"text-decoration-thickness": (
+		"configs": (
+			"property": (
+				"text-decoration-thickness": decoration-
+			),
+		),
+		"values": (
+      "auto": auto,
+			"from-font": from-font,
+			"0": 0px,
+			"1": 1px,
+			"2": 2px,
+			"4": 4px,
+			"8": 8px
+		)
+	)
+);
+
+//===============================================================================================================
+// TEXT UNDERLINE OFFSET
+//===============================================================================================================
+$typography-text-underline-offset: (
+	"text-underline-offset": (
+		"configs": (
+			"property": (
+				"text-underline-offset": underline-offset-
+			),
+		),
+		"values": (
+      "auto": auto,
+			"0": 0px,
+			"1": 1px,
+			"2": 2px,
+			"4": 4px,
+			"8": 8px
+		)
+	)
+);
+
+//===============================================================================================================
+// TEXT TRANSFORM
+//===============================================================================================================
+$typography-transform: (
+	"text-transform": (
+		"configs": (
+			"property": (
+				"text-transform": ""
+			),
+		),
+		"values": (
+			"uppercase": uppercase,
+			"lowercase": lowercase,
+			"capitalize": capitalize,
+			"normal-case": none
+		)
+	)
+);
+
+//===============================================================================================================
+// TEXT OVERFLOW
+//===============================================================================================================
+$typography-text-overflow: (
+	"text-overflow": (
+		"configs": (
+			"property": (
+				"": ""
+			),
+		),
+		"values": (
+			"truncate": "overflow: hidden; text-overflow: ellipsis; white-space: nowrap;",
+			"text-ellipsis": "text-overflow: ellipsis;",
+			"text-clip": "text-overflow: clip;"
+		)
+	)
+);
+
+//===============================================================================================================
+// TEXT INDENT
+//===============================================================================================================
+$typography-text-indent: (
+	"text-indent": (
+		"configs": (
+			"property": (
+				"text-indent": indent-
+			),
+		),
+		"values": (
+			functions.map-flatten-cti($tokens, "size", "base")
+		)
+	)
+);
+
+//===============================================================================================================
+// VERTICAL ALIGN
+//===============================================================================================================
+$typography-vertical-align: (
+	"vertical-align": (
+		"configs": (
+			"property": (
+				"vertical-align": align-
+			),
+		),
+		"values": (
+			"align-baseline": baseline,
+			"align-top": top,
+			"align-middle": middle,
+			"align-bottom": bottom,
+			"align-text-top": text-top,
+			"align-text-bottom": text-bottom,
+			"align-sub": sub,
+			"align-super": super
+		)
+	)
+);
+
+//===============================================================================================================
+// WHITESPACE
+//===============================================================================================================
+$typography-whitespace: (
+	"whitespace": (
+		"configs": (
+			"property": (
+				"white-space": whitespace-
+			),
+		),
+		"values": (
+			"normal": normal,
+			"nowrap": nowrap,
+			"pre": pre,
+			"pre-line": pre-line,
+			"pre-wrap": pre-wrap
+		)
+	)
+);
+
+//===============================================================================================================
+// WORD BREAK
+//===============================================================================================================
+$typography-word-break: (
+	"word-break": (
+		"configs": (
+			"property": (
+				"": break-
+			),
+		),
+		"values": (
+			"normal": "overflow-wrap: normal; word-break: normal;",
+			"words": "overflow-wrap: break-word;",
+			"all": "word-break: break-all;"
+		)
+	)
+);
+
+//===============================================================================================================
+// CONTENT
+//===============================================================================================================
+$typography-content: (
+	"content": (
+		"values": (
+			"none":	"none"
+		)
+	)
+);
